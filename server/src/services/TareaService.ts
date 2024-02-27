@@ -51,11 +51,24 @@ export class TareaService {
     }
     async editarTareaEstado(token: string, id_tarea: string, cambiar: { estado: boolean }) {
         const ver = await servicioUsuario.checarToken(token);
-        const tarea = await repositorios.tarea.findOne({ where: { id_tarea }, relations: { usuario: true } });
+        const tarea = await repositorios.tarea.findOne({ 
+            where: { id_tarea }, relations: { usuario: true } ,
+            select:{
+                id_tarea:true,
+                fechaFinalizar:true,
+                createdAt:true,
+                tarea:true,
+                usuario:{
+                    id_usuario:true,
+                    username:true
+                }
+            }
+        });
         if (!tarea || tarea.usuario.id_usuario !== ver.id_usuario)
             throw Boom.badRequest('No tienes permiso para esta accion');
 
-        const data = repositorios.tarea.update({ id_tarea }, cambiar);
-        return data;
+        tarea.estado = cambiar.estado;
+        await repositorios.tarea.save(tarea);
+        return tarea;
     }
 }
