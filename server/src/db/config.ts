@@ -5,14 +5,14 @@ import { Usuario } from './models/Usuario';
 
 
 export const AppDataSource = new DataSource(
-    {
-        type: 'postgres',
-        ssl:{
-            rejectUnauthorized:false
-        },
-        url: envVariables.db_url,
-        logging: true,
-        synchronize: true,
-        entities: [Tareas, Usuario]
-    }
+	{
+		type: 'postgres',
+		ssl:{
+			rejectUnauthorized:false
+		},
+		url: envVariables.db_url,
+		logging: true,
+		synchronize: true,
+		entities: [Tareas, Usuario]
+	}
 );

@@ -8,17 +8,17 @@ export const tareasRoutes = express.Router();
 const controller = new TareasController();
 
 tareasRoutes.get('/',
-    controller.leerTareas);
+	controller.leerTareas);
 
 tareasRoutes.post('/',
-    joiHandle(addTareaJoi, 'body'),
-    controller.addTarea);
+	joiHandle(addTareaJoi, 'body'),
+	controller.addTarea);
 
 tareasRoutes.patch('/:id_tarea',
-    joiHandle(selectId, 'params'),
-    joiHandle(editTareajoi, 'body'),
-    controller.editarTarea);
+	joiHandle(selectId, 'params'),
+	joiHandle(editTareajoi, 'body'),
+	controller.editarTarea);
 
 tareasRoutes.delete('/:id_tarea',
-    joiHandle(selectId, 'params'),
-    controller.eliminarTarea);
+	joiHandle(selectId, 'params'),
+	controller.eliminarTarea);

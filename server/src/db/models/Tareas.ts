@@ -1,24 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from "typeorm";
-import { Usuario } from "./Usuario";
+/* eslint-disable no-mixed-spaces-and-tabs */
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Usuario } from './Usuario';
 
 @Entity()
 export class Tareas {
     @PrimaryGeneratedColumn('uuid')
-    id_tarea: string;
+    	id_tarea: string;
 
     @Column({length:900})
-    tarea: string;
+    	tarea: string;
 
     @Column({default:false})
-    estado: boolean;
+    	estado: boolean;
 
     @Column({type:'timestamp'})
-    fechaFinalizar: Date;
+    	fechaFinalizar: Date;
 
     @CreateDateColumn({type:'timestamp'})
-    createdAt: string;
+    	createdAt: string;
 
     @ManyToOne(()=>Usuario, (usuario)=>usuario.tareas, {onDelete:'CASCADE'})
     @JoinColumn({name:'idUsuario'})
-    usuario:Usuario;
+    	usuario:Usuario;
 }

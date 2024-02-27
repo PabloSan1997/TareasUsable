@@ -1,20 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { Tareas } from "./Tareas";
+/* eslint-disable no-mixed-spaces-and-tabs */
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Tareas } from './Tareas';
 
 @Entity()
 export class Usuario {
     @PrimaryGeneratedColumn('uuid')
-    id_usuario: string;
+    	id_usuario: string;
 
     @Column({ length: 100, unique:true})
-    username: string;
+    	username: string;
 
     @Column({ length: 2000 })
-    password: string;
+    	password: string;
 
     @Column({ length: 50 })
-    rol: string;
+    	rol: string;
 
     @OneToMany(()=>Tareas, (tareas)=> tareas.usuario)
-    tareas:Tareas[];
+    	tareas:Tareas[];
 }
