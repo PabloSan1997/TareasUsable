@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { envVariables } from "../utilities/envVariables";
 import Boom from '@hapi/boom';
+import { usuarioRespuesta } from "../utilities/usuarioRespuesta";
 
 const usuarioRe = AppDataSource.getRepository(Usuario);
 
@@ -14,7 +15,7 @@ export class UsuarioService {
         const password = bcrypt.hash(newUser.password, 8);
         const usuarioNuevo = usuarioRe.create({ ...newUser, password: await password });
         await usuarioRe.manager.save(usuarioNuevo);
-        return usuarioNuevo;
+        return usuarioRespuesta(usuarioNuevo);
     }
     async login(user: LoginUser) {
         const ver = await usuarioRe.findOne({

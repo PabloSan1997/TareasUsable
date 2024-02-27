@@ -5,6 +5,9 @@ interface UsuarioInterface {
     username: string;
     password: string;
     rol: string;
+}
+
+interface UsuarioTareasInterface extends UsuarioInterface{
     tareas: Array<TareaInterface>
 }
 
