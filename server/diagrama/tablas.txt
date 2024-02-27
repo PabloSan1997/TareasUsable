@@ -1,0 +1,18 @@
+Table usuario{
+  id_usuario uuid [primary key]
+  username varchar(100)
+  password varchar(2000)
+  rol varchar(50)
+}
+
+Table tareas{
+  id_tarea uuid [primary key]
+  tarea varchar(900) [not null]
+  estado boolean [default:  false]
+  fechaFinalizar date
+  createdAt date
+  idUsuario uuid
+}
+
+
+Ref : usuario.id_usuario < tareas.idUsuario
