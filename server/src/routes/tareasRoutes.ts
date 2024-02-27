@@ -7,5 +7,5 @@ const controller = new TareasController();
 
 tareasRoutes.get('/', controller.leerTareas);
 tareasRoutes.post('/', controller.addTarea);
-tareasRoutes.patch('/:id_tarea');
-tareasRoutes.delete('/:id_tarea');
+tareasRoutes.patch('/:id_tarea', controller.editarTarea);
+tareasRoutes.delete('/:id_tarea', controller.eliminarTarea);

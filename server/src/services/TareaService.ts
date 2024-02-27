@@ -32,9 +32,30 @@ export class TareaService {
             },
             relations: {
                 tareas: true
+            },
+            select:{
+                id_usuario:true,
+                username:true,
+                tareas:true
             }
         });
         if (!usuario) throw Boom.badRequest('No tienes permiso para eso');
-        return usuarioRespuesta(usuario);
+        return usuario;
+    }
+    async borrarTarea(token: string, id_tarea: string) {
+        const ver = await servicioUsuario.checarToken(token);
+        const buscarTarea = await repositorios.tarea.findOne({ where: { id_tarea }, relations: { usuario: true } });
+        if (!!buscarTarea && buscarTarea.usuario.id_usuario == ver.id_usuario) {
+            repositorios.tarea.delete({ id_tarea });
+        }
+    }
+    async editarTareaEstado(token: string, id_tarea: string, cambiar: { estado: boolean }) {
+        const ver = await servicioUsuario.checarToken(token);
+        const tarea = await repositorios.tarea.findOne({ where: { id_tarea }, relations: { usuario: true } });
+        if (!tarea || tarea.usuario.id_usuario !== ver.id_usuario)
+            throw Boom.badRequest('No tienes permiso para esta accion');
+
+        const data = repositorios.tarea.update({ id_tarea }, cambiar);
+        return data;
     }
 }

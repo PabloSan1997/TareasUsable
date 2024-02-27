@@ -18,7 +18,7 @@ export class Tareas {
     @CreateDateColumn({type:'timestamp'})
     createdAt: string;
 
-    @ManyToOne(()=>Usuario, (usuario)=>usuario.tareas)
+    @ManyToOne(()=>Usuario, (usuario)=>usuario.tareas, {onDelete:'CASCADE'})
     @JoinColumn({name:'idUsuario'})
     usuario:Usuario;
 }
