@@ -44,6 +44,7 @@ interface InitialState {
     username: string;
     loading:boolean;
     token:string;
+    id_usuario:string;
     formulario:{
         tarea:string;
         fechaFinalizar:string;

@@ -1,6 +1,6 @@
+import React from "react";
 import { tareasAction } from "../slice/tareasSlice";
 import { useAppDispatch, useAppSelector } from "../store/store"
-import React from "react";
 
 
 export function Formulario() {
@@ -13,8 +13,8 @@ export function Formulario() {
         dispatch(tareasAction.escribirFecha({ escribir: e.target.value }));
     }
     return (
-        <form>
-            <input type="text" value={textoForm.tarea} onChange={escribirTarea} />
+        <form className="">
+            <input type="text"  value={textoForm.tarea} onChange={escribirTarea} />
             <input type="date" value={textoForm.fechaFinalizar} onChange={escribirFecha} />
             <button type="submit">Subir</button>
         </form>
