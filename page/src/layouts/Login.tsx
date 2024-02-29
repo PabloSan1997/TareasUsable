@@ -16,7 +16,7 @@ export function Login() {
     }
     if (token) return <Navigate to={myRutes.home} />
     return (
-        <form onSubmit={subir} className="bg-gray-700 mt-10 w-[30rem] flex-col flex m-auto text-white p-3 rounded-xl">
+        <form onSubmit={subir} className="bg-gray-700 mt-10 w-lDis flex-col flex m-auto text-white p-3 rounded-xl">
             <h2
                 className="text-2xl mx-auto font-bold"
             >Login</h2>
