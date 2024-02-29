@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loginExtraReducer, readTareasExtraReducer } from './extraReducers/tareaExtraReducers';
+import { addTareaExtraReducer, cambiarEstadoExtraReduce, eliminarTareaExtraReducer, loginExtraReducer, readTareasExtraReducer } from './extraReducers/tareaExtraReducers';
 
 const initialState: InitialState = {
     tareas: [],
@@ -42,11 +42,26 @@ const tareaSlice = createSlice({
             state.token = action.payload.token;
         });
 
-        builder.addCase(readTareasExtraReducer.fulfilled, (state, action)=>{
+        builder.addCase(readTareasExtraReducer.fulfilled, (state, action) => {
             state.tareas = action.payload.tareas;
             state.username = action.payload.username;
             state.id_usuario = action.payload.id_usuario;
         });
+
+        builder.addCase(addTareaExtraReducer.fulfilled, (state, action) => {
+            state.tareas = [...state.tareas, action.payload];
+        });
+
+        builder.addCase(cambiarEstadoExtraReduce.fulfilled, (state, action) => {
+            const { id_tarea, estado } = action.payload;
+            const i = state.tareas.findIndex(t => t.id_tarea === id_tarea);
+            state.tareas[i].estado = estado;
+        });
+
+        builder.addCase(eliminarTareaExtraReducer.fulfilled, (state, action) => {
+            const id_tarea = action.payload.id_tarea;
+            state.tareas = state.tareas.filter(t => t.id_tarea !== id_tarea);
+        })
     }
 });
 

@@ -12,7 +12,7 @@ interface EditEstado {
 
 interface AddTarea {
     tarea: string,
-    fechaFinalizar: Date | string
+    fechaFinalizar: string
 }
 interface TareasInterface {
     id_tarea: string,
