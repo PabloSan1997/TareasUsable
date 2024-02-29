@@ -16,7 +16,7 @@ export class Tareas {
     @Column({type:'timestamp'})
     	fechaFinalizar: Date;
 
-    @CreateDateColumn({type:'timestamp'})
+    @CreateDateColumn({type:'timestamptz'})
     	createdAt: string;
 
     @ManyToOne(()=>Usuario, (usuario)=>usuario.tareas, {onDelete:'CASCADE'})

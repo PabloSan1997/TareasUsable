@@ -3,7 +3,6 @@ import { AppDataSource } from '../db/config';
 import { Tareas } from '../db/models/Tareas';
 import { Usuario } from '../db/models/Usuario';
 import { UsuarioService } from './UsuarioService';
-import { usuarioRespuesta } from '../utilities/usuarioRespuesta';
 
 const repositorios = {
 	usuario: AppDataSource.getRepository(Usuario),
@@ -18,11 +17,7 @@ export class TareaService {
 		const crearTarea = repositorios.tarea.create(newTarea);
 		crearTarea.usuario = usuario;
 		await repositorios.tarea.save(crearTarea);
-		const quitarPassword = usuarioRespuesta(crearTarea.usuario);
-		return {
-			...crearTarea,
-			usuario: quitarPassword
-		};
+		return repositorios.tarea.findOneBy({ id_tarea: crearTarea.id_tarea });
 	}
 	async leerTareas(token: string) {
 		const ver = await servicioUsuario.checarToken(token);
@@ -33,10 +28,15 @@ export class TareaService {
 			relations: {
 				tareas: true
 			},
-			select:{
-				id_usuario:true,
-				username:true,
-				tareas:true
+			select: {
+				id_usuario: true,
+				username: true,
+				tareas: true
+			},
+			order:{
+				tareas:{
+					createdAt:'ASC'
+				}
 			}
 		});
 		if (!usuario) throw Boom.badRequest('No tienes permiso para eso');
@@ -51,17 +51,11 @@ export class TareaService {
 	}
 	async editarTareaEstado(token: string, id_tarea: string, cambiar: { estado: boolean }) {
 		const ver = await servicioUsuario.checarToken(token);
-		const tarea = await repositorios.tarea.findOne({ 
-			where: { id_tarea }, relations: { usuario: true } ,
-			select:{
-				id_tarea:true,
-				fechaFinalizar:true,
-				createdAt:true,
-				tarea:true,
-				usuario:{
-					id_usuario:true,
-					username:true
-				}
+		const tarea = await repositorios.tarea.findOne({
+			where: { id_tarea }, relations: { usuario: true },
+			select: {
+				id_tarea: true,
+				estado: true
 			}
 		});
 		if (!tarea || tarea.usuario.id_usuario !== ver.id_usuario)
@@ -69,6 +63,12 @@ export class TareaService {
 
 		tarea.estado = cambiar.estado;
 		await repositorios.tarea.save(tarea);
-		return tarea;
+		return repositorios.tarea.findOne({
+			where: { id_tarea },
+			select: {
+				id_tarea: true,
+				estado: true
+			}
+		});
 	}
 }
