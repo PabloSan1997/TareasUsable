@@ -171,4 +171,4 @@ $RECYCLE.BIN/
 
 *.http
 
-/src/static
+# /src/static
